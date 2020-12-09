@@ -12,11 +12,12 @@ export class AppService {
     private playersService: PlayersService,
   ) {}
 
-  getAll() {
-    return Promise.all([
+  async getAll() {
+    const [leagues, teams, players] = await Promise.all([
       this.leaguesService.findAll(),
       this.teamsService.findAll(),
       this.playersService.findAll(),
     ]);
+    return ({ leagues, teams, players });
   }
 }
