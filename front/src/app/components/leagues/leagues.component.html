@@ -5,7 +5,7 @@
 <h1>{{ selection?.name }}</h1>
 
 <div *ngIf="teams">
-  <a *ngFor="let team of teams" [routerLink]="['/teams', team._id]">
+  <a *ngFor="let team of teams" [routerLink]="['/teams', team.name]">
     <img [src]="team.thumbnail" />
   </a>
 </div>

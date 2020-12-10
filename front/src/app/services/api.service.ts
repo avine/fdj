@@ -18,4 +18,8 @@ export class ApiService {
   getPlayers(teamId: string) {
     return this.httpClient.get<any[]>(`http://localhost:3000/api/teams/${teamId}/players`);
   }
+
+  getPlayersByTeamName(teamName: string) {
+    return this.httpClient.get<any[]>(`http://localhost:3000/api/teams/name/${teamName}/players`);
+  }
 }

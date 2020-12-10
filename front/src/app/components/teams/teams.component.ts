@@ -22,8 +22,8 @@ export class TeamsComponent implements OnInit {
     this.players$ = this.activatedRoute.params
       .pipe(
         first(),
-        switchMap(({ teamId }) => {
-          return this.apiService.getPlayers(teamId);
+        switchMap(({ teamName }) => {
+          return this.apiService.getPlayersByTeamName(teamName);
         })
       );
   }

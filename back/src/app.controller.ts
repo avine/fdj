@@ -1,7 +1,7 @@
 import { Controller, Get, Param } from '@nestjs/common';
 
 import { AppService } from './app.service';
-import { GetPlayersDto, GetTeamsDto } from './app.validation';
+import { GetPlayersByTeamNameDto, GetPlayersDto, GetTeamsDto } from './app.validation';
 
 @Controller()
 export class AppController {
@@ -20,5 +20,10 @@ export class AppController {
   @Get('api/teams/:teamId/players')
   getPlayers(@Param() params: GetPlayersDto) {
     return this.appService.getPlayers(params.teamId);
+  }
+
+  @Get('api/teams/name/:teamName/players')
+  getPlayersByTeamName(@Param() params: GetPlayersByTeamNameDto) {
+    return this.appService.getPlayersByTeamName(params.teamName);
   }
 }

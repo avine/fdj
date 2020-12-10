@@ -30,4 +30,9 @@ export class AppService {
     const players = await this.teamsService.findPlayers(teamId);
     return this.playersService.filter(players);
   }
+
+  async getPlayersByTeamName(teamName: string) {
+    const players = await this.teamsService.findPlayersByTeamName(teamName);
+    return this.playersService.filter(players);
+  }
 }

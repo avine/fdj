@@ -9,3 +9,8 @@ export class GetPlayersDto {
   @IsString()
   teamId: string;
 }
+
+export class GetPlayersByTeamNameDto {
+  @IsString()
+  teamName: string;
+}

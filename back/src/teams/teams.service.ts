@@ -23,4 +23,11 @@ export class TeamsService {
       .exec();
     return data?.players;
   }
+
+  async findPlayersByTeamName(teamName: string): Promise<string[]> {
+    const data = await this.teamModel
+      .findOne({ name: teamName }, { players: 1 })
+      .exec();
+    return data?.players;
+  }
 }
