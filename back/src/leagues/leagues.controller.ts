@@ -1,6 +1,7 @@
 import { Controller, Get, Param } from '@nestjs/common';
 
 import { LeaguesService } from './leagues.service';
+import { FindTeamsDto } from './leagues.validation';
 
 @Controller('leagues')
 export class LeaguesController {
@@ -17,7 +18,7 @@ export class LeaguesController {
   }
 
   @Get(':leagueId/teams')
-  findTeams(@Param() params: { leagueId: string }) {
+  findTeams(@Param() params: FindTeamsDto) {
     return this.leaguesService.findTeams(params.leagueId);
   }
 }
