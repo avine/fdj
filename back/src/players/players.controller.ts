@@ -7,7 +7,7 @@ export class PlayersController {
   constructor(private playersService: PlayersService) {}
 
   @Get()
-  get() {
+  findAll() {
     return this.playersService.findAll();
   }
 }

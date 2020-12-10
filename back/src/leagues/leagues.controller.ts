@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 
 import { LeaguesService } from './leagues.service';
 
@@ -7,7 +7,17 @@ export class LeaguesController {
   constructor(private leaguesService: LeaguesService) {}
 
   @Get()
-  get() {
+  findAll() {
     return this.leaguesService.findAll();
+  }
+
+  @Get('names')
+  findAllNames() {
+    return this.leaguesService.findAllNames();
+  }
+
+  @Get(':leagueId/teams')
+  findTeams(@Param() params: { leagueId: string }) {
+    return this.leaguesService.findTeams(params.leagueId);
   }
 }

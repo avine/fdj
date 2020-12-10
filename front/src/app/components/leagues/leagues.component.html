@@ -1,0 +1,11 @@
+<p>leagues works!</p>
+
+<app-search-league (selection)="setSelection($event)"></app-search-league>
+
+<h1>{{ selection?.name }}</h1>
+
+<div *ngIf="teams">
+  <a *ngFor="let team of teams" [routerLink]="['/teams', team._id]">
+    <img [src]="team.thumbnail" />
+  </a>
+</div>

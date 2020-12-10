@@ -20,4 +20,14 @@ export class AppService {
     ]);
     return ({ leagues, teams, players });
   }
+
+  async getTeams(leagueId: string) {
+    const teams = await this.leaguesService.findTeams(leagueId);
+    return this.teamsService.filter(teams);
+  }
+
+  async getPlayers(teamId: string) {
+    const players = await this.teamsService.findPlayers(teamId);
+    return this.playersService.filter(players);
+  }
 }

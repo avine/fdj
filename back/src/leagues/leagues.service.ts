@@ -9,7 +9,18 @@ import { League, LeagueDocument } from './schemas/leagues.schema';
 export class LeaguesService {
   constructor(@InjectModel(League.name) private leagueModel: Model<LeagueDocument>) {}
 
-  async findAll(): Promise<League[]> {
+  findAll(): Promise<League[]> {
     return this.leagueModel.find().exec();
+  }
+
+  findAllNames(): Promise<League[]> {
+    return this.leagueModel.find({}, { name: 1 }).exec();
+  }
+
+  async findTeams(leagueId: string): Promise<string[]> {
+    const data = await this.leagueModel
+      .findOne({ _id: leagueId }, { teams: 1 })
+      .exec();
+    return data?.teams;
   }
 }
