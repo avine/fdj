@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 
 import { LeaguesService } from './leagues/leagues.service';
 import { PlayersService } from './players/players.service';
@@ -23,16 +23,25 @@ export class AppService {
 
   async getTeams(leagueId: string) {
     const teams = await this.leaguesService.findTeams(leagueId);
+    if (!teams) {
+      throw new BadRequestException();
+    }
     return this.teamsService.filter(teams);
   }
 
   async getPlayers(teamId: string) {
     const players = await this.teamsService.findPlayers(teamId);
+    if (!players) {
+      throw new BadRequestException();
+    }
     return this.playersService.filter(players);
   }
 
   async getPlayersByTeamName(teamName: string) {
     const players = await this.teamsService.findPlayersByTeamName(teamName);
+    if (!players) {
+      throw new BadRequestException();
+    }
     return this.playersService.filter(players);
   }
 }

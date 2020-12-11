@@ -1,6 +1,6 @@
-import { IsString } from 'class-validator';
+import { IsValidObjectId } from '../shared/object-id.validation';
 
 export class FindTeamsDto {
-  @IsString()
+  @IsValidObjectId()
   leagueId: string;
 }
