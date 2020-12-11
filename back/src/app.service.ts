@@ -2,6 +2,7 @@ import { Injectable, BadRequestException } from '@nestjs/common';
 
 import { LeaguesService } from './leagues/leagues.service';
 import { PlayersService } from './players/players.service';
+import { Player, TeamSummary } from './shared';
 import { TeamsService } from './teams/teams.service';
 
 @Injectable()
@@ -21,7 +22,7 @@ export class AppService {
     return ({ leagues, teams, players });
   }
 
-  async getTeams(leagueId: string) {
+  async getTeams(leagueId: string): Promise<TeamSummary[]> {
     const teams = await this.leaguesService.findTeams(leagueId);
     if (!teams) {
       throw new BadRequestException();
@@ -29,7 +30,7 @@ export class AppService {
     return this.teamsService.filter(teams);
   }
 
-  async getPlayers(teamId: string) {
+  async getPlayers(teamId: string): Promise<Player[]> {
     const players = await this.teamsService.findPlayers(teamId);
     if (!players) {
       throw new BadRequestException();
@@ -37,7 +38,7 @@ export class AppService {
     return this.playersService.filter(players);
   }
 
-  async getPlayersByTeamName(teamName: string) {
+  async getPlayersByTeamName(teamName: string): Promise<Player[]> {
     const players = await this.teamsService.findPlayersByTeamName(teamName);
     if (!players) {
       throw new BadRequestException();

@@ -9,11 +9,11 @@ import { Player, PlayerDocument } from './schemas/players.schema';
 export class PlayersService {
   constructor(@InjectModel(Player.name) private playerModel: Model<PlayerDocument>) {}
 
-  async findAll(): Promise<Player[]> {
+  async findAll(): Promise<PlayerDocument[]> {
     return this.playerModel.find().exec();
   }
 
-  async filter(playersId: string[]): Promise<Player[]> {
+  async filter(playersId: string[]): Promise<PlayerDocument[]> {
     return this.playerModel.find({ _id: { $in: playersId } }).exec();
   }
 }

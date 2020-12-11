@@ -9,11 +9,11 @@ import { League, LeagueDocument } from './schemas/leagues.schema';
 export class LeaguesService {
   constructor(@InjectModel(League.name) private leagueModel: Model<LeagueDocument>) {}
 
-  findAll(): Promise<League[]> {
+  findAll(): Promise<LeagueDocument[]> {
     return this.leagueModel.find().exec();
   }
 
-  findAllNames(): Promise<League[]> {
+  findAllNames(): Promise<Pick<LeagueDocument, '_id' | 'name'>[]> {
     return this.leagueModel.find({}, { name: 1 }).exec();
   }
 

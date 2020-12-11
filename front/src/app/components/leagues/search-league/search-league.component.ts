@@ -1,5 +1,5 @@
-import { Observable, of, Subscription, combineLatest } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { Observable, combineLatest } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -26,7 +26,7 @@ export class SearchLeagueComponent implements OnInit {
     });
 
     this.filtered$ = combineLatest([
-      this.apiService.getLeagues().pipe(
+      this.apiService.getLeagueNames().pipe(
         map((leagues) =>
           leagues.map((league) => ({
             ...league,

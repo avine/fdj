@@ -22,7 +22,7 @@ export class LeaguesComponent implements OnInit {
 
   setSelection(selection: any) {
     this.selection = selection;
-    this.apiService.getTeams(selection._id).subscribe(teams => {
+    this.apiService.getTeamsSummary(selection._id).subscribe(teams => {
       this.teams = teams;
     });
   }

@@ -1,5 +1,6 @@
 import { Controller, Get, Param } from '@nestjs/common';
 
+import { LeagueName } from '../shared';
 import { LeaguesService } from './leagues.service';
 import { FindTeamsDto } from './leagues.validation';
 
@@ -13,7 +14,7 @@ export class LeaguesController {
   }
 
   @Get('names')
-  findAllNames() {
+  findAllNames(): Promise<LeagueName[]> {
     return this.leaguesService.findAllNames();
   }
 

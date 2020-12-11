@@ -1,4 +1,4 @@
-import { IsValidObjectId } from '../shared/object-id.validation';
+import { IsValidObjectId } from '../common/object-id.validation';
 
 export class FindTeamsDto {
   @IsValidObjectId()

@@ -1,5 +1,5 @@
 import { IsString } from 'class-validator';
-import { IsValidObjectId } from './shared/object-id.validation';
+import { IsValidObjectId } from './common/object-id.validation';
 
 export class GetTeamsDto {
   @IsValidObjectId()

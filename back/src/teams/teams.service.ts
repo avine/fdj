@@ -9,11 +9,11 @@ import { Team, TeamDocument } from './schemas/teams.schema';
 export class TeamsService {
   constructor(@InjectModel(Team.name) private teamModel: Model<TeamDocument>) {}
 
-  findAll(): Promise<Team[]> {
+  findAll(): Promise<TeamDocument[]> {
     return this.teamModel.find().exec();
   }
 
-  async filter(teamsId: string[]): Promise<Team[]> {
+  async filter(teamsId: string[]): Promise<Pick<TeamDocument, 'name' | 'thumbnail'>[]> {
     return this.teamModel.find({ _id: { $in: teamsId } }, { name: 1, thumbnail: 1 }).exec();
   }
 
