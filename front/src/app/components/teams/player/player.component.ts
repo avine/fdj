@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Player } from '@fdj/shared';
 
 @Component({
   selector: 'app-player',
@@ -6,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./player.component.scss']
 })
 export class PlayerComponent implements OnInit {
-  @Input() player: any;
+  @Input() player: Player;
 
   constructor() { }
 

@@ -1,3 +1,5 @@
-<div *ngIf="players$ | async as players">
-  <app-player *ngFor="let player of players" [player]="player"></app-player>
-</div>
+<ng-container *ngIf="players$ | async as players">
+  <app-player class="player" *ngFor="let player of players" [player]="player"></app-player>
+
+  <div *ngIf="!players.length">Oops! No players in this team.</div>
+</ng-container>

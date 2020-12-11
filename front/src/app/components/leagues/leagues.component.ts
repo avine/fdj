@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { LeagueSummary } from '@fdj/shared';
+import { LeagueSummary, TeamSummary } from '@fdj/shared';
 
 import { ApiService } from '../../services/api.service';
 
@@ -9,7 +9,7 @@ import { ApiService } from '../../services/api.service';
   styleUrls: ['./leagues.component.scss'],
 })
 export class LeaguesComponent {
-  teams: any;
+  teams: TeamSummary[];
 
   league: LeagueSummary;
 

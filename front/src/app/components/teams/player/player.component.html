@@ -1,1 +1,10 @@
-<pre>{{ player | json }}</pre>
+<div class="thumbnail">
+  <img [src]="player.thumbnail" />
+</div>
+
+<div class="infos">
+  <h2 class="name">{{ player.name }}</h2>
+  <div>{{ player.position }}</div>
+  <div>Date of birth: {{ player.born | date }}</div>
+  <div>Price: {{ player.signin.amount | number }} {{ player.signin.currency | uppercase }}</div>
+</div>

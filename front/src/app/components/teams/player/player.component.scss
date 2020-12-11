@@ -1,0 +1,22 @@
+:host {
+  display: flex;
+  text-align: left;
+  align-items: center;
+}
+
+.thumbnail {
+  line-height: 0;
+
+  img {
+    border-radius: var(--border-radius);
+    width: 10rem;
+  }
+}
+
+.infos {
+  padding-left: 1.5rem;
+}
+
+.name {
+  margin-top: 0;
+}
