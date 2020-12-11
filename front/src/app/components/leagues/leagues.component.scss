@@ -1,0 +1,31 @@
+.search {
+
+}
+
+.title {
+  margin: 3rem 0 1rem 0;
+}
+
+.list {
+  display: flex;
+  justify-content: space-around;
+}
+
+.list-item {
+  line-height: 0;
+  border-radius: var(--border-radius);
+  padding: 1rem;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  img {
+    width: 6rem;
+  }
+}
+
+.empty {
+  color: #666;
+  font-style: italic;
+}

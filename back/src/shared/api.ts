@@ -1,4 +1,4 @@
-export interface LeagueName {
+export interface LeagueSummary {
   _id?: string;
   name: string;
 }

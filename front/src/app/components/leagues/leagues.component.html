@@ -1,11 +1,11 @@
-<p>leagues works!</p>
+<app-search-league class="search" (selected)="selectLeague($event)"></app-search-league>
 
-<app-search-league (selection)="setSelection($event)"></app-search-league>
+<h1 class="title" *ngIf="league?.name">{{ league?.name }}</h1>
 
-<h1>{{ selection?.name }}</h1>
-
-<div *ngIf="teams">
-  <a *ngFor="let team of teams" [routerLink]="['/teams', team.name]">
+<div class="list" *ngIf="teams">
+  <a class="list-item" *ngFor="let team of teams" [routerLink]="['/teams', team.name]">
     <img [src]="team.thumbnail" />
   </a>
+
+  <div class="empty" *ngIf="!teams.length">Oops! No teams in this league</div>
 </div>

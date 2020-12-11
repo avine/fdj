@@ -1,1 +1,30 @@
-/* You can add global styles to this file, and also import other style files */
+// Overwrite normalize CSS "line-height"
+html,
+button,
+input,
+optgroup,
+select,
+textarea {
+	line-height: 1.5;
+}
+
+:root {
+  --default-color: #00265a;
+  --border-radius: 4px;
+  --border-color: #ddd;
+  --background-color: #fff;
+  --box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  --footer-height: 3.5rem;
+}
+
+@font-face {
+  font-family: "Fdj";
+  src: url("./assets/fonts/Metropolis-Regular.ttf") format("truetype");
+}
+
+body {
+  margin: 0 0 var(--footer-height) 0;
+  font-family: Fdj, sans-serif;
+  font-size: 16px;
+  color: var(--default-color);
+}

@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LeagueName, Player, TeamSummary } from '@fdj/shared';
+import { LeagueSummary, Player, TeamSummary } from '@fdj/shared';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +10,8 @@ import { LeagueName, Player, TeamSummary } from '@fdj/shared';
 export class ApiService {
   constructor(private httpClient: HttpClient) {}
 
-  getLeagueNames(): Observable<LeagueName[]> {
-    return this.httpClient.get<LeagueName[]>('http://localhost:3000/leagues/names');
+  getLeaguesSummary(): Observable<LeagueSummary[]> {
+    return this.httpClient.get<LeagueSummary[]>('http://localhost:3000/leagues/names');
   }
 
   getTeamsSummary(leagueId: string): Observable<TeamSummary[]> {
