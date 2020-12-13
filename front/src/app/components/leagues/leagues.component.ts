@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { catchError, filter, map, switchMap } from 'rxjs/operators';
 
 import { Component, OnInit } from '@angular/core';
@@ -27,8 +27,8 @@ export class LeaguesComponent implements OnInit {
       filter(leagueName => !!leagueName),
       switchMap((leagueName) => this.apiService.getTeamsByLeagueName(leagueName)),
       catchError(() => {
-        // TODO: navigate to `NotFoundComponent`
-        return [];
+        this.router.navigate(['/not-found']);
+        return of(null);
       })
     );
   }

@@ -1,5 +1,8 @@
 <ng-container *ngIf="teamWithPlayers$ | async as teamWithPlayers">
-  <h1>{{ teamWithPlayers.name }}</h1>
+  <h1 class="title">
+    <img [src]="teamWithPlayers.thumbnail" />
+    {{ teamWithPlayers.name }}
+  </h1>
 
   <app-player class="player" *ngFor="let player of teamWithPlayers.players" [player]="player"></app-player>
 
