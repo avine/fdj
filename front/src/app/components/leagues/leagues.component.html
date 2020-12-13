@@ -1,13 +1,15 @@
 <app-search-league class="search" (selected)="navigateToLeague($event)"></app-search-league>
 
-<ng-container *ngIf="teams$ | async as teams">
-  <h1 class="title" *ngIf="leagueName$ | async as leagueName">{{ leagueName }}</h1>
+<ng-container *ngIf="leagueWithTeams$ | async as leagueWithTeams">
+  <h1 class="title">{{ leagueWithTeams.name }}</h1>
 
-  <div class="list" *ngIf="teams">
-    <a class="list-item" *ngFor="let team of teams" [routerLink]="['/teams', team.name]">
+  <div class="list" *ngIf="leagueWithTeams.teams.length; else empty">
+    <a class="list-item" *ngFor="let team of leagueWithTeams.teams" [routerLink]="['/teams', team.name]">
       <img [src]="team.thumbnail" />
     </a>
   </div>
 
-  <div class="empty" *ngIf="!teams.length">Oops! No teams in this league</div>
+  <ng-template #empty>
+    <div class="empty">Oops! No teams in this league</div>
+  </ng-template>
 </ng-container>

@@ -1,10 +1,10 @@
-import { Observable } from 'rxjs';
-import { first, switchMap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { catchError, first, switchMap } from 'rxjs/operators';
 import { ApiService } from 'src/app/services/api.service';
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Player } from '@fdj/shared';
+import { TeamWithPlayers } from '@fdj/shared';
 
 @Component({
   selector: 'app-teams',
@@ -12,7 +12,7 @@ import { Player } from '@fdj/shared';
   styleUrls: ['./teams.component.scss'],
 })
 export class TeamsComponent implements OnInit {
-  players$: Observable<Player[]>;
+  teamWithPlayers$: Observable<TeamWithPlayers>;
 
   constructor(
     private apiService: ApiService,
@@ -20,11 +20,15 @@ export class TeamsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.players$ = this.activatedRoute.params
+    this.teamWithPlayers$ = this.activatedRoute.params
       .pipe(
         first(),
         switchMap(({ teamName }) => {
           return this.apiService.getPlayersByTeamName(teamName);
+        }),
+        catchError(() => {
+          // TODO: navigate to `NotFoundComponent`...
+          return of(null);
         })
       );
   }

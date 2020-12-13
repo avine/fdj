@@ -1,5 +1,7 @@
-<ng-container *ngIf="players$ | async as players">
-  <app-player class="player" *ngFor="let player of players" [player]="player"></app-player>
+<ng-container *ngIf="teamWithPlayers$ | async as teamWithPlayers">
+  <h1>{{ teamWithPlayers.name }}</h1>
 
-  <div *ngIf="!players.length">Oops! No players in this team.</div>
+  <app-player class="player" *ngFor="let player of teamWithPlayers.players" [player]="player"></app-player>
+
+  <div *ngIf="!teamWithPlayers?.players.length">Oops! No players in this team.</div>
 </ng-container>

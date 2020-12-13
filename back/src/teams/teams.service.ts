@@ -13,21 +13,19 @@ export class TeamsService {
     return this.teamModel.find().exec();
   }
 
-  async filter(teamsId: string[]): Promise<Pick<TeamDocument, 'name' | 'thumbnail'>[]> {
-    return this.teamModel.find({ _id: { $in: teamsId } }, { name: 1, thumbnail: 1 }).exec();
+  async filter(
+    teamsId: string[],
+  ): Promise<Pick<TeamDocument, 'name' | 'thumbnail'>[]> {
+    return this.teamModel
+      .find({ _id: { $in: teamsId } }, { name: 1, thumbnail: 1 })
+      .exec();
   }
 
-  async findPlayers(teamId: string): Promise<string[]> {
-    const data = await this.teamModel
-      .findOne({ _id: teamId }, { players: 1 })
-      .exec();
-    return data?.players;
+  findOne(teamId: string): Promise<TeamDocument> {
+    return this.teamModel.findOne({ _id: teamId }).exec();
   }
 
-  async findPlayersByTeamName(teamName: string): Promise<string[]> {
-    const data = await this.teamModel
-      .findOne({ name: teamName }, { players: 1 })
-      .exec();
-    return data?.players;
+  findOneByName(teamName: string): Promise<TeamDocument> {
+    return this.teamModel.findOne({ name: teamName }).exec();
   }
 }

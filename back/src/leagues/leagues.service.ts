@@ -7,7 +7,9 @@ import { League, LeagueDocument } from './schemas/leagues.schema';
 
 @Injectable()
 export class LeaguesService {
-  constructor(@InjectModel(League.name) private leagueModel: Model<LeagueDocument>) {}
+  constructor(
+    @InjectModel(League.name) private leagueModel: Model<LeagueDocument>,
+  ) {}
 
   findAll(): Promise<LeagueDocument[]> {
     return this.leagueModel.find().exec();
@@ -17,17 +19,11 @@ export class LeaguesService {
     return this.leagueModel.find({}, { name: 1 }).exec();
   }
 
-  async findTeams(leagueId: string): Promise<string[]> {
-    const data = await this.leagueModel
-      .findOne({ _id: leagueId }, { teams: 1 })
-      .exec();
-    return data?.teams;
+  findOne(leagueId: string): Promise<LeagueDocument> {
+    return this.leagueModel.findOne({ _id: leagueId }).exec();
   }
 
-  async findTeamsByLeagueName(leagueName: string): Promise<string[]> {
-    const data = await this.leagueModel
-      .findOne({ name: leagueName }, { teams: 1 })
-      .exec();
-    return data?.teams;
+  async findOneByName(leagueName: string): Promise<LeagueDocument> {
+    return await this.leagueModel.findOne({ name: leagueName }).exec();
   }
 }

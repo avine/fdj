@@ -17,3 +17,11 @@ export interface Player {
   born: string;
   signin: { amount: number; currency: string; };
 }
+
+export interface LeagueWithTeams extends LeagueSummary {
+  teams: TeamSummary[];
+}
+
+export interface TeamWithPlayers extends TeamSummary {
+  players: Player[];
+}
