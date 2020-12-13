@@ -30,6 +30,14 @@ export class AppService {
     return this.teamsService.filter(teams);
   }
 
+  async getTeamsByLeagueName(leagueName: string): Promise<TeamSummary[]> {
+    const teams = await this.leaguesService.findTeamsByLeagueName(leagueName);
+    if (!teams) {
+      throw new BadRequestException();
+    }
+    return this.teamsService.filter(teams);
+  }
+
   async getPlayers(teamId: string): Promise<Player[]> {
     const players = await this.teamsService.findPlayers(teamId);
     if (!players) {

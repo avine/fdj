@@ -6,6 +6,10 @@ export class GetTeamsDto {
   leagueId: string;
 }
 
+export class GetTeamsByLeagueNameDto {
+  @IsString()
+  leagueName: string;
+}
 export class GetPlayersDto {
   @IsValidObjectId()
   teamId: string;

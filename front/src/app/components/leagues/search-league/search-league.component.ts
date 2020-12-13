@@ -14,6 +14,8 @@ import { escapeRegExp } from '../../../utils.ts/escape-regexp';
   styleUrls: ['./search-league.component.scss'],
 })
 export class SearchLeagueComponent implements OnInit {
+  @Output() selected = new EventEmitter<LeagueSummary>();
+
   private readonly searchMinLength = 2;
 
   formGroup: FormGroup;
@@ -22,8 +24,6 @@ export class SearchLeagueComponent implements OnInit {
     suggestions: LeagueSummary[];
     match: LeagueSummary;
   }>;
-
-  @Output() selected = new EventEmitter<LeagueSummary>();
 
   constructor(
     private apiService: ApiService,

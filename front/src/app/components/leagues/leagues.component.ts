@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
+
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LeagueSummary, TeamSummary } from '@fdj/shared';
 
 import { ApiService } from '../../services/api.service';
@@ -8,17 +12,31 @@ import { ApiService } from '../../services/api.service';
   templateUrl: './leagues.component.html',
   styleUrls: ['./leagues.component.scss'],
 })
-export class LeaguesComponent {
-  teams: TeamSummary[];
+export class LeaguesComponent implements OnInit {
+  leagueName$: Observable<string>;
 
-  league: LeagueSummary;
+  teams$: Observable<TeamSummary[]>;
 
-  constructor(private apiService: ApiService) {}
+  constructor(
+    private apiService: ApiService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
+  ) {}
 
-  selectLeague(league: LeagueSummary): void {
-    this.league = league;
-    this.apiService
-      .getTeamsSummary(league._id)
-      .subscribe((teams) => (this.teams = teams));
+  ngOnInit(): void {
+    this.leagueName$ = this.activatedRoute.params.pipe(
+      map(({ leagueName }) => leagueName)
+    );
+    this.teams$ = this.leagueName$.pipe(
+      switchMap((leagueName) => this.apiService.getTeamsByLeagueName(leagueName)),
+      catchError(() => {
+        // TODO: navigate to `NotFoundComponent`
+        return [];
+      })
+    );
+  }
+
+  navigateToLeague(league: LeagueSummary): void {
+    this.router.navigate(['/leagues', league.name]);
   }
 }

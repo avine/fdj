@@ -7,6 +7,7 @@ import { TeamsComponent } from './components/teams/teams.component';
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/leagues' },
   { path: 'leagues', component: LeaguesComponent },
+  { path: 'leagues/:leagueName', component: LeaguesComponent },
   { path: 'teams/:teamName', component: TeamsComponent },
 ];
 

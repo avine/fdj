@@ -18,6 +18,10 @@ export class ApiService {
     return this.httpClient.get<TeamSummary[]>(`http://localhost:3000/api/leagues/${leagueId}/teams`);
   }
 
+  getTeamsByLeagueName(leagueName: string): Observable<TeamSummary[]> {
+    return this.httpClient.get<TeamSummary[]>(`http://localhost:3000/api/leagues/name/${leagueName}/teams`);
+  }
+
   getPlayers(teamId: string): Observable<Player[]> {
     return this.httpClient.get<Player[]>(`http://localhost:3000/api/teams/${teamId}/players`);
   }
