@@ -1,15 +1,15 @@
-export interface LeagueSummary {
+export interface LeagueApi {
   _id?: string;
   name: string;
 }
 
-export interface TeamSummary {
+export interface TeamApi {
   _id?: string;
   name: string;
   thumbnail: string;
 }
 
-export interface Player {
+export interface PlayerApi {
   _id?: string;
   name: string;
   position: string;
@@ -18,10 +18,10 @@ export interface Player {
   signin: { amount: number; currency: string; };
 }
 
-export interface LeagueWithTeams extends LeagueSummary {
-  teams: TeamSummary[];
+export interface LeagueWithTeamsApi extends LeagueApi {
+  teams: TeamApi[];
 }
 
-export interface TeamWithPlayers extends TeamSummary {
-  players: Player[];
+export interface TeamWithPlayersApi extends TeamApi {
+  players: PlayerApi[];
 }

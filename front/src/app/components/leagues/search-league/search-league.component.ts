@@ -1,12 +1,12 @@
-import { combineLatest, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { LeagueSummary } from '@fdj/shared';
+import { LeagueApi } from '@fdj/shared';
 
-import { ApiService } from '../../../services/api.service';
 import { escapeRegExp } from '../../../utils.ts/escape-regexp';
+import { SearchLeagueState } from './search-league.types';
 
 @Component({
   selector: 'app-search-league',
@@ -14,21 +14,17 @@ import { escapeRegExp } from '../../../utils.ts/escape-regexp';
   styleUrls: ['./search-league.component.scss'],
 })
 export class SearchLeagueComponent implements OnInit {
-  @Output() selected = new EventEmitter<LeagueSummary>();
+  @Input() leagues: LeagueApi[];
+
+  @Output() selected = new EventEmitter<LeagueApi>();
 
   private readonly searchMinLength = 2;
 
   formGroup: FormGroup;
 
-  state$: Observable<{
-    suggestions: LeagueSummary[];
-    match: LeagueSummary;
-  }>;
+  state$: Observable<SearchLeagueState>;
 
-  constructor(
-    private apiService: ApiService,
-    private formBuilder: FormBuilder
-  ) {}
+  constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
     this.initForm();
@@ -40,22 +36,18 @@ export class SearchLeagueComponent implements OnInit {
   }
 
   private initState(): void {
-    this.state$ = combineLatest([this.getLeagues(), this.getSearch()]).pipe(
-      map(([leagues, search]) => {
-        const suggestions = this.getSuggestions(leagues, search);
-        const match = this.matchLeague(suggestions, search);
-        return { suggestions: match ? [] : suggestions, match };
+    this.state$ = this.getSearch().pipe(
+      map((search) => {
+        const suggestions = this.getSuggestions(search);
+        const selected = this.matchSuggestion(suggestions, search);
+        return { suggestions: selected ? [] : suggestions, selected };
       }),
       tap((state) => {
-        if (state.match) {
-          this.selected.emit(state.match);
+        if (state.selected) {
+          this.selected.emit(state.selected);
         }
       })
     );
-  }
-
-  private getLeagues(): Observable<LeagueSummary[]> {
-    return this.apiService.getLeaguesSummary();
   }
 
   private getSearch(): Observable<string> {
@@ -66,37 +58,31 @@ export class SearchLeagueComponent implements OnInit {
     );
   }
 
-  private getSuggestions(
-    leagues: LeagueSummary[],
-    search: string
-  ): LeagueSummary[] {
+  private getSuggestions(search: string): LeagueApi[] {
     if (!search) {
       return [];
     }
-    return leagues.filter((league) =>
-      new RegExp(this.getSearchForRegExp(search), 'i').test(league.name)
+    return this.leagues.filter((league) =>
+      new RegExp(this.getEscapedSearch(search), 'i').test(league.name)
     );
   }
 
-  private getSearchForRegExp(search: string): string {
-    return escapeRegExp(search.trim().replace(/\s+/g, ' '));
-  }
-
-  private matchLeague(
-    leagues: LeagueSummary[],
-    search: string
-  ): LeagueSummary | null {
+  private matchSuggestion(leagues: LeagueApi[], search: string): LeagueApi | null {
     if (leagues.length !== 1) {
       return null;
     }
     const [league] = leagues;
-    const match = new RegExp(`^${this.getSearchForRegExp(search)}$`, 'i').test(
+    const match = new RegExp(`^${this.getEscapedSearch(search)}$`, 'i').test(
       league.name
     );
     if (!match) {
       return null;
     }
     return league;
+  }
+
+  private getEscapedSearch(search: string): string {
+    return escapeRegExp(search.trim().replace(/\s+/g, ' '));
   }
 
   updateSearch(leagueName: string): void {

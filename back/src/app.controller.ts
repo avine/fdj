@@ -7,38 +7,44 @@ import {
   GetTeamsByLeagueNameDto,
   GetTeamsDto,
 } from './app.validation';
-import { LeagueWithTeams, TeamWithPlayers } from './shared';
+import { LeagueApi, LeagueWithTeamsApi, TeamWithPlayersApi } from './shared';
 
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
+  // Just for demo purpose
   @Get()
   getAll() {
     return this.appService.getAll();
   }
 
-  @Get('api/leagues/:leagueId/teams')
-  getTeams(@Param() params: GetTeamsDto): Promise<LeagueWithTeams> {
+  @Get('leagues/name')
+  getLeagues(): Promise<LeagueApi[]> {
+    return this.appService.getLeagues();
+  }
+
+  @Get('leagues/:leagueId/teams')
+  getTeams(@Param() params: GetTeamsDto): Promise<LeagueWithTeamsApi> {
     return this.appService.getTeams(params.leagueId);
   }
 
-  @Get('api/leagues/name/:leagueName/teams')
+  @Get('leagues/name/:leagueName/teams')
   getTeamsByLeagueName(
     @Param() params: GetTeamsByLeagueNameDto,
-  ): Promise<LeagueWithTeams> {
+  ): Promise<LeagueWithTeamsApi> {
     return this.appService.getTeamsByLeagueName(params.leagueName);
   }
 
-  @Get('api/teams/:teamId/players')
-  getPlayers(@Param() params: GetPlayersDto): Promise<TeamWithPlayers> {
+  @Get('teams/:teamId/players')
+  getPlayers(@Param() params: GetPlayersDto): Promise<TeamWithPlayersApi> {
     return this.appService.getPlayers(params.teamId);
   }
 
-  @Get('api/teams/name/:teamName/players')
+  @Get('teams/name/:teamName/players')
   getPlayersByTeamName(
     @Param() params: GetPlayersByTeamNameDto,
-  ): Promise<TeamWithPlayers> {
+  ): Promise<TeamWithPlayersApi> {
     return this.appService.getPlayersByTeamName(params.teamName);
   }
 }

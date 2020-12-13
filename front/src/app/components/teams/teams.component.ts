@@ -4,7 +4,7 @@ import { ApiService } from 'src/app/services/api.service';
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TeamWithPlayers } from '@fdj/shared';
+import { TeamWithPlayersApi } from '@fdj/shared';
 
 @Component({
   selector: 'app-teams',
@@ -12,7 +12,7 @@ import { TeamWithPlayers } from '@fdj/shared';
   styleUrls: ['./teams.component.scss'],
 })
 export class TeamsComponent implements OnInit {
-  teamWithPlayers$: Observable<TeamWithPlayers>;
+  teamWithPlayers$: Observable<TeamWithPlayersApi>;
 
   constructor(
     private apiService: ApiService,

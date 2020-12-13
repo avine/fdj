@@ -3,7 +3,7 @@ import { catchError, filter, map, switchMap } from 'rxjs/operators';
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LeagueSummary, LeagueWithTeams } from '@fdj/shared';
+import { LeagueApi, LeagueWithTeamsApi } from '@fdj/shared';
 
 import { ApiService } from '../../services/api.service';
 
@@ -13,7 +13,9 @@ import { ApiService } from '../../services/api.service';
   styleUrls: ['./leagues.component.scss'],
 })
 export class LeaguesComponent implements OnInit {
-  leagueWithTeams$: Observable<LeagueWithTeams>;
+  leagues$: Observable<LeagueApi[]>;
+
+  leagueWithTeams$: Observable<LeagueWithTeamsApi>;
 
   constructor(
     private apiService: ApiService,
@@ -22,6 +24,8 @@ export class LeaguesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.leagues$ = this.apiService.getLeagues();
+
     this.leagueWithTeams$ = this.activatedRoute.params.pipe(
       map(({ leagueName }) => leagueName),
       filter(leagueName => !!leagueName),
@@ -33,7 +37,7 @@ export class LeaguesComponent implements OnInit {
     );
   }
 
-  navigateToLeague(league: LeagueSummary): void {
+  navigateToLeague(league: LeagueApi): void {
     this.router.navigate(['/leagues', league.name]);
   }
 }

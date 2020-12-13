@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Player } from '@fdj/shared';
+import { PlayerApi } from '@fdj/shared';
 
 @Component({
   selector: 'app-player',
@@ -7,7 +7,7 @@ import { Player } from '@fdj/shared';
   styleUrls: ['./player.component.scss']
 })
 export class PlayerComponent implements OnInit {
-  @Input() player: Player;
+  @Input() player: PlayerApi;
 
   constructor() { }
 

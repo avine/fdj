@@ -5,6 +5,10 @@ import { InjectModel } from '@nestjs/mongoose';
 
 import { League, LeagueDocument } from './schemas/leagues.schema';
 
+type LeagueProjection = {
+  [K in keyof League]?: number;
+};
+
 @Injectable()
 export class LeaguesService {
   constructor(
@@ -16,7 +20,8 @@ export class LeaguesService {
   }
 
   findAllNames(): Promise<Pick<LeagueDocument, '_id' | 'name'>[]> {
-    return this.leagueModel.find({}, { name: 1 }).exec();
+    const projection: LeagueProjection = { name: 1 };
+    return this.leagueModel.find({}, projection).exec();
   }
 
   findOne(leagueId: string): Promise<LeagueDocument> {

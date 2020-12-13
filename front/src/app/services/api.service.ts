@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LeagueSummary, TeamWithPlayers, LeagueWithTeams } from '@fdj/shared';
+import { LeagueApi, TeamWithPlayersApi, LeagueWithTeamsApi } from '@fdj/shared';
 
 @Injectable({
   providedIn: 'root'
@@ -10,23 +10,23 @@ import { LeagueSummary, TeamWithPlayers, LeagueWithTeams } from '@fdj/shared';
 export class ApiService {
   constructor(private httpClient: HttpClient) {}
 
-  getLeaguesSummary(): Observable<LeagueSummary[]> {
-    return this.httpClient.get<LeagueSummary[]>('http://localhost:3000/leagues/names');
+  getLeagues(): Observable<LeagueApi[]> {
+    return this.httpClient.get<LeagueApi[]>('http://localhost:3000/leagues/name');
   }
 
-  getTeamsSummary(leagueId: string): Observable<LeagueWithTeams> {
-    return this.httpClient.get<LeagueWithTeams>(`http://localhost:3000/api/leagues/${leagueId}/teams`);
+  getTeams(leagueId: string): Observable<LeagueWithTeamsApi> {
+    return this.httpClient.get<LeagueWithTeamsApi>(`http://localhost:3000/leagues/${leagueId}/teams`);
   }
 
-  getTeamsByLeagueName(leagueName: string): Observable<LeagueWithTeams> {
-    return this.httpClient.get<LeagueWithTeams>(`http://localhost:3000/api/leagues/name/${leagueName}/teams`);
+  getTeamsByLeagueName(leagueName: string): Observable<LeagueWithTeamsApi> {
+    return this.httpClient.get<LeagueWithTeamsApi>(`http://localhost:3000/leagues/name/${leagueName}/teams`);
   }
 
-  getPlayers(teamId: string): Observable<TeamWithPlayers> {
-    return this.httpClient.get<TeamWithPlayers>(`http://localhost:3000/api/teams/${teamId}/players`);
+  getPlayers(teamId: string): Observable<TeamWithPlayersApi> {
+    return this.httpClient.get<TeamWithPlayersApi>(`http://localhost:3000/teams/${teamId}/players`);
   }
 
-  getPlayersByTeamName(teamName: string): Observable<TeamWithPlayers> {
-    return this.httpClient.get<TeamWithPlayers>(`http://localhost:3000/api/teams/name/${teamName}/players`);
+  getPlayersByTeamName(teamName: string): Observable<TeamWithPlayersApi> {
+    return this.httpClient.get<TeamWithPlayersApi>(`http://localhost:3000/teams/name/${teamName}/players`);
   }
 }
