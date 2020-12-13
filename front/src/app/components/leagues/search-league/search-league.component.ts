@@ -6,7 +6,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { LeagueSummary } from '@fdj/shared';
 
 import { ApiService } from '../../../services/api.service';
-import { LeagueLowerCase } from './search-league.types';
+import { escapeRegExp } from '../../../utils.ts/escape-regexp';
 
 @Component({
   selector: 'app-search-league',
@@ -19,13 +19,16 @@ export class SearchLeagueComponent implements OnInit {
   formGroup: FormGroup;
 
   state$: Observable<{
-    suggestions: LeagueLowerCase[];
+    suggestions: LeagueSummary[];
     match: LeagueSummary;
   }>;
 
   @Output() selected = new EventEmitter<LeagueSummary>();
 
-  constructor(private apiService: ApiService, private formBuilder: FormBuilder) {}
+  constructor(
+    private apiService: ApiService,
+    private formBuilder: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.initForm();
@@ -37,17 +40,11 @@ export class SearchLeagueComponent implements OnInit {
   }
 
   private initState(): void {
-    this.state$ = combineLatest([
-      this.getLeaguesLowerCase(),
-      this.getSearchLowerCase(),
-    ]).pipe(
-      map(([leaguesLowerCase, searchLowerCase]) => {
-        const leagues = this.getFilteredLeagues(
-          leaguesLowerCase,
-          searchLowerCase
-        );
-        const match = this.getMatch(leagues, searchLowerCase);
-        return { suggestions: match ? [] : leagues, match };
+    this.state$ = combineLatest([this.getLeagues(), this.getSearch()]).pipe(
+      map(([leagues, search]) => {
+        const suggestions = this.getSuggestions(leagues, search);
+        const match = this.matchLeague(suggestions, search);
+        return { suggestions: match ? [] : suggestions, match };
       }),
       tap((state) => {
         if (state.match) {
@@ -57,50 +54,49 @@ export class SearchLeagueComponent implements OnInit {
     );
   }
 
-  private getLeaguesLowerCase(): Observable<LeagueLowerCase[]> {
-    return this.apiService.getLeaguesSummary().pipe(
-      map((leagues) =>
-        leagues.map((league) => ({
-          ...league,
-          nameLowerCase: league.name.toLowerCase(),
-        }))
-      )
-    );
+  private getLeagues(): Observable<LeagueSummary[]> {
+    return this.apiService.getLeaguesSummary();
   }
 
-  private getSearchLowerCase(): Observable<string> {
+  private getSearch(): Observable<string> {
     return this.formGroup.controls.search.valueChanges.pipe(
       map((search: string) =>
-        search.length >= this.searchMinLength ? search.toLowerCase() : ''
+        search.length >= this.searchMinLength ? search : ''
       )
     );
   }
 
-  private getFilteredLeagues(
-    leaguesLowerCase: LeagueLowerCase[],
-    searchLowerCase: string
-  ): LeagueLowerCase[] {
-    if (!searchLowerCase) {
+  private getSuggestions(
+    leagues: LeagueSummary[],
+    search: string
+  ): LeagueSummary[] {
+    if (!search) {
       return [];
     }
-    const leagues = leaguesLowerCase.filter((league) =>
-      league.nameLowerCase.includes(searchLowerCase)
+    return leagues.filter((league) =>
+      new RegExp(this.getSearchForRegExp(search), 'i').test(league.name)
     );
-    return leagues;
   }
 
-  private getMatch(
-    leaguesLowerCase: LeagueLowerCase[],
-    searchLowerCase: string
+  private getSearchForRegExp(search: string): string {
+    return escapeRegExp(search.trim().replace(/\s+/g, ' '));
+  }
+
+  private matchLeague(
+    leagues: LeagueSummary[],
+    search: string
   ): LeagueSummary | null {
-    if (
-      leaguesLowerCase.length === 1 &&
-      leaguesLowerCase[0].nameLowerCase === searchLowerCase
-      ) {
-      const { _id, name } = leaguesLowerCase[0];
-      return { _id, name };
+    if (leagues.length !== 1) {
+      return null;
     }
-    return null;
+    const [league] = leagues;
+    const match = new RegExp(`^${this.getSearchForRegExp(search)}$`, 'i').test(
+      league.name
+    );
+    if (!match) {
+      return null;
+    }
+    return league;
   }
 
   updateSearch(leagueName: string): void {
