@@ -1,10 +1,11 @@
 import { Observable, of } from 'rxjs';
 import { catchError, first, switchMap } from 'rxjs/operators';
-import { ApiService } from 'src/app/services/api.service';
 
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TeamWithPlayersApi } from '@fdj/shared';
+
+import { ApiService } from '../shared/services/api.service';
 
 @Component({
   selector: 'app-teams',

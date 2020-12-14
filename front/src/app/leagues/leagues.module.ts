@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { NoDataModule } from '../no-data/no-data.module';
+import { NoDataModule } from '../shared/components/no-data/no-data.module';
 import { LeagueSearchComponent } from './league-search/league-search.component';
 import { LeagueTeamsComponent } from './league-teams/league-teams.component';
 import { LeaguesRoutingModule } from './leagues-routing.module';

@@ -12,7 +12,7 @@ import {
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { LeagueApi } from '@fdj/shared';
 
-import { escapeRegExp } from '../../../utils.ts/escape-regexp';
+import { escapeRegExp } from '../../shared/utils/escape-regexp';
 import { LeagueSearchState } from './league-search.types';
 
 @Component({

@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router } from '@angular/router';
 import { LeagueWithTeamsApi } from '@fdj/shared';
 
-import { ApiService } from '../../../services/api.service';
+import { ApiService } from '../../shared/services/api.service';
 
 @Injectable({
   providedIn: 'root',

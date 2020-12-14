@@ -4,11 +4,11 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LeaguesModule } from './components/leagues/leagues.module';
-import { NoDataModule } from './components/no-data/no-data.module';
-import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-import { PlayerComponent } from './components/teams/player/player.component';
-import { TeamsComponent } from './components/teams/teams.component';
+import { LeaguesModule } from './leagues/leagues.module';
+import { NoDataModule } from './shared/components/no-data/no-data.module';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { PlayerComponent } from './teams/player/player.component';
+import { TeamsComponent } from './teams/teams.component';
 
 @NgModule({
   imports: [

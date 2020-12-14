@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-import { TeamsComponent } from './components/teams/teams.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { TeamsComponent } from './teams/teams.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/leagues' },
   {
     path: 'leagues',
     loadChildren: () =>
-      import('./components/leagues/leagues.module').then(
+      import('./leagues/leagues.module').then(
         (m) => m.LeaguesModule
       ),
   },
