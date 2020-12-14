@@ -4,6 +4,4 @@
   (selected)="navigateToLeague($event)"
 ></app-league-search>
 
-<ng-container *ngIf="leagueWithTeams$ | async as leagueWithTeams">
-  <app-league-teams [leagueWithTeams]="leagueWithTeams"></app-league-teams>
-</ng-container>
+<router-outlet></router-outlet>

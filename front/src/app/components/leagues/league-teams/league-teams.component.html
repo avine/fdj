@@ -1,15 +1,17 @@
-<h1 class="league">{{ leagueWithTeams.name }}</h1>
+<ng-container *ngIf="leagueWithTeams">
+  <h1 class="league">{{ leagueWithTeams.name }}</h1>
 
-<div class="teams" *ngIf="leagueWithTeams.teams.length; else noData">
-  <a
-    class="team"
-    *ngFor="let team of leagueWithTeams.teams"
-    [routerLink]="['/teams', team.name]"
-  >
-    <img [src]="team.thumbnail" />
-  </a>
-</div>
+  <div class="teams" *ngIf="leagueWithTeams.teams.length; else noData">
+    <a
+      class="team"
+      *ngFor="let team of leagueWithTeams.teams"
+      [routerLink]="['/teams', team.name]"
+    >
+      <img [src]="team.thumbnail" />
+    </a>
+  </div>
 
-<ng-template #noData>
-  <app-no-data>Oops! No teams in this league.</app-no-data>
-</ng-template>
+  <ng-template #noData>
+    <app-no-data>Oops! No teams in this league.</app-no-data>
+  </ng-template>
+</ng-container>

@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Subscription } from 'rxjs';
+
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { LeagueWithTeamsApi } from '@fdj/shared';
 
 @Component({
@@ -7,6 +16,24 @@ import { LeagueWithTeamsApi } from '@fdj/shared';
   styleUrls: ['./league-teams.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LeagueTeamsComponent {
-  @Input() leagueWithTeams: LeagueWithTeamsApi;
+export class LeagueTeamsComponent implements OnInit, OnDestroy {
+  leagueWithTeams: LeagueWithTeamsApi;
+
+  subscription: Subscription;
+
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private changeDetectorRef: ChangeDetectorRef
+  ) {}
+
+  ngOnInit(): void {
+    this.subscription = this.activatedRoute.data.subscribe(({ data }) => {
+      this.leagueWithTeams = data;
+      this.changeDetectorRef.markForCheck();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 }

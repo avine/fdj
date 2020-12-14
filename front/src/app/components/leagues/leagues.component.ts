@@ -1,9 +1,8 @@
-import { Observable, of } from 'rxjs';
-import { catchError, filter, map, switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { LeagueApi, LeagueWithTeamsApi } from '@fdj/shared';
+import { Router } from '@angular/router';
+import { LeagueApi } from '@fdj/shared';
 
 import { ApiService } from '../../services/api.service';
 
@@ -16,28 +15,10 @@ import { ApiService } from '../../services/api.service';
 export class LeaguesComponent implements OnInit {
   leagues$: Observable<LeagueApi[]>;
 
-  leagueWithTeams$: Observable<LeagueWithTeamsApi>;
-
-  constructor(
-    private apiService: ApiService,
-    private activatedRoute: ActivatedRoute,
-    private router: Router
-  ) {}
+  constructor(private apiService: ApiService, private router: Router) {}
 
   ngOnInit(): void {
     this.leagues$ = this.apiService.getLeagues();
-
-    this.leagueWithTeams$ = this.activatedRoute.params.pipe(
-      map(({ leagueName }) => leagueName),
-      filter((leagueName) => !!leagueName),
-      switchMap((leagueName) =>
-        this.apiService.getTeamsByLeagueName(leagueName)
-      ),
-      catchError(() => {
-        this.router.navigate(['/page-not-found']);
-        return of(null);
-      })
-    );
   }
 
   navigateToLeague(league: LeagueApi): void {
