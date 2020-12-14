@@ -1,0 +1,174 @@
+openapi: 3.0.0
+
+info:
+  title: FDJ
+  description: The FDJ API
+  version: '1.0'
+  contact: {}
+
+tags: []
+
+servers:
+  - url: http://localhost:3000/
+    description: Development server
+
+paths:
+  '/leagues/name':
+    get:
+      summary: Get the list of leagues
+      responses:
+        '200':
+          description: 'A JSON array of leagues'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  '$ref': "#/components/schemas/league"
+
+  '/leagues/{leagueId}/teams':
+    get:
+      summary: Get the teams of a given league
+      parameters:
+        - name: leagueId
+          in: path
+          required: true
+          description: The MongoDB ObjectID of the league
+          schema:
+            type : string
+      responses:
+        '200':
+          description: 'A league object with its teams'
+          content:
+            application/json:
+              schema:
+                '$ref': "#/components/schemas/leagueWithTeams"
+
+  '/leagues/name/{leagueName}/teams':
+    get:
+      summary: Get the teams of a given league
+      parameters:
+        - name: leagueName
+          in: path
+          required: true
+          description: The league name
+          schema:
+            type : string
+      responses:
+        '200':
+          description: 'A league object with its teams'
+          content:
+            application/json:
+              schema:
+                '$ref': "#/components/schemas/leagueWithTeams"
+
+  '/teams/{teamId}/players':
+    get:
+      summary: Get the players of a given team
+      parameters:
+        - name: teamId
+          in: path
+          required: true
+          description: The MongoDB ObjectID of the team
+          schema:
+            type : string
+      responses:
+        '200':
+          description: 'A team object with its players'
+          content:
+            application/json:
+              schema:
+                '$ref': "#/components/schemas/teamWithPlayers"
+
+  '/teams/name/{teamName}/players':
+    get:
+      summary: Get the players of a given team
+      parameters:
+        - name: teamName
+          in: path
+          required: true
+          description: The team name
+          schema:
+            type : string
+      responses:
+        '200':
+          description: 'A team object with its players'
+          content:
+            application/json:
+              schema:
+                '$ref': "#/components/schemas/teamWithPlayers"
+
+components:
+  schemas:
+    league:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: MongoDB ObjectID
+        name:
+          type: string
+
+    team:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: MongoDB ObjectID
+        name:
+          type: string
+        thumbnail:
+          type: string
+          description: Full url of the image
+
+    player:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: MongoDB ObjectID
+        name:
+          type: string
+        position:
+          type: string
+        thumbnail:
+          type: string
+          description: Full url of the image
+        born:
+          type: string
+        signin:
+          type: object
+          properties:
+            amount: 
+              type: number
+            currency:
+              type: string
+
+    leagueWithTeams:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: MongoDB ObjectID
+        name:
+          type: string
+        teams:
+          type: array
+          items:
+            '$ref': '#/components/schemas/team'
+
+    teamWithPlayers:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: MongoDB ObjectID
+        name:
+          type: string
+        thumbnail:
+          type: string
+          description: Full url of the image
+        players:
+          type: array
+          items:
+            '$ref': '#/components/schemas/player'
