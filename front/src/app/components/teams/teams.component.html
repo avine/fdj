@@ -1,10 +1,18 @@
 <ng-container *ngIf="teamWithPlayers$ | async as teamWithPlayers">
-  <h1 class="title">
+  <h1 class="team">
     <img [src]="teamWithPlayers.thumbnail" />
     {{ teamWithPlayers.name }}
   </h1>
 
-  <app-player class="player" *ngFor="let player of teamWithPlayers.players" [player]="player"></app-player>
+  <ng-container *ngIf="teamWithPlayers.players.length; else noData">
+    <app-player
+      class="player"
+      *ngFor="let player of teamWithPlayers.players"
+      [player]="player"
+    ></app-player>
+  </ng-container>
 
-  <div *ngIf="!teamWithPlayers?.players.length">Oops! No players in this team.</div>
+  <ng-template #noData>
+    <app-no-data>Oops! No players in this team.</app-no-data>
+  </ng-template>
 </ng-container>

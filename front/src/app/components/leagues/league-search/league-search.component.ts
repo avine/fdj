@@ -1,19 +1,27 @@
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { LeagueApi } from '@fdj/shared';
 
 import { escapeRegExp } from '../../../utils.ts/escape-regexp';
-import { SearchLeagueState } from './search-league.types';
+import { LeagueSearchState } from './league-search.types';
 
 @Component({
-  selector: 'app-search-league',
-  templateUrl: './search-league.component.html',
-  styleUrls: ['./search-league.component.scss'],
+  selector: 'app-league-search',
+  templateUrl: './league-search.component.html',
+  styleUrls: ['./league-search.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SearchLeagueComponent implements OnInit {
+export class LeagueSearchComponent implements OnInit {
   @Input() leagues: LeagueApi[];
 
   @Output() selected = new EventEmitter<LeagueApi>();
@@ -22,7 +30,7 @@ export class SearchLeagueComponent implements OnInit {
 
   formGroup: FormGroup;
 
-  state$: Observable<SearchLeagueState>;
+  state$: Observable<LeagueSearchState>;
 
   constructor(private formBuilder: FormBuilder) {}
 
@@ -67,7 +75,10 @@ export class SearchLeagueComponent implements OnInit {
     );
   }
 
-  private matchSuggestion(leagues: LeagueApi[], search: string): LeagueApi | null {
+  private matchSuggestion(
+    leagues: LeagueApi[],
+    search: string
+  ): LeagueApi | null {
     if (leagues.length !== 1) {
       return null;
     }

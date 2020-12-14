@@ -5,22 +5,24 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { LeagueSearchComponent } from './components/leagues/league-search/league-search.component';
+import { LeagueTeamsComponent } from './components/leagues/league-teams/league-teams.component';
 import { LeaguesComponent } from './components/leagues/leagues.component';
-import { SearchLeagueComponent } from './components/leagues/search-league/search-league.component';
-import { NotFoundComponent } from './components/not-found/not-found.component';
+import { NoDataComponent } from './components/no-data/no-data.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { PlayerComponent } from './components/teams/player/player.component';
 import { TeamsComponent } from './components/teams/teams.component';
-import { LeagueTeamsComponent } from './components/leagues/league-teams/league-teams.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    LeagueSearchComponent,
+    LeagueTeamsComponent,
     LeaguesComponent,
-    SearchLeagueComponent,
-    NotFoundComponent,
+    NoDataComponent,
+    PageNotFoundComponent,
     PlayerComponent,
     TeamsComponent,
-    LeagueTeamsComponent,
   ],
   imports: [
     BrowserModule,

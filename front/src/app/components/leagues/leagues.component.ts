@@ -1,7 +1,7 @@
 import { Observable, of } from 'rxjs';
 import { catchError, filter, map, switchMap } from 'rxjs/operators';
 
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LeagueApi, LeagueWithTeamsApi } from '@fdj/shared';
 
@@ -11,6 +11,7 @@ import { ApiService } from '../../services/api.service';
   selector: 'app-leagues',
   templateUrl: './leagues.component.html',
   styleUrls: ['./leagues.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LeaguesComponent implements OnInit {
   leagues$: Observable<LeagueApi[]>;
@@ -28,10 +29,12 @@ export class LeaguesComponent implements OnInit {
 
     this.leagueWithTeams$ = this.activatedRoute.params.pipe(
       map(({ leagueName }) => leagueName),
-      filter(leagueName => !!leagueName),
-      switchMap((leagueName) => this.apiService.getTeamsByLeagueName(leagueName)),
+      filter((leagueName) => !!leagueName),
+      switchMap((leagueName) =>
+        this.apiService.getTeamsByLeagueName(leagueName)
+      ),
       catchError(() => {
-        this.router.navigate(['/not-found']);
+        this.router.navigate(['/page-not-found']);
         return of(null);
       })
     );

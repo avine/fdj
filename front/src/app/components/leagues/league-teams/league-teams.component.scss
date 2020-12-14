@@ -1,13 +1,13 @@
-.title {
+.league {
   margin: 3rem 0 1rem 0;
 }
 
-.list {
+.teams {
   display: flex;
   justify-content: space-around;
 }
 
-.list-item {
+.team {
   line-height: 0;
   border-radius: var(--border-radius);
   padding: 1rem;
@@ -19,9 +19,4 @@
   img {
     width: 6rem;
   }
-}
-
-.empty {
-  color: #666;
-  font-style: italic;
 }

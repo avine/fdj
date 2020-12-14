@@ -1,8 +1,8 @@
-<h1 class="title">{{ leagueWithTeams.name }}</h1>
+<h1 class="league">{{ leagueWithTeams.name }}</h1>
 
-<div class="list" *ngIf="leagueWithTeams.teams.length; else noTeams">
+<div class="teams" *ngIf="leagueWithTeams.teams.length; else noData">
   <a
-    class="list-item"
+    class="team"
     *ngFor="let team of leagueWithTeams.teams"
     [routerLink]="['/teams', team.name]"
   >
@@ -10,6 +10,6 @@
   </a>
 </div>
 
-<ng-template #noTeams>
-  <div class="empty">Oops! No teams in this league</div>
+<ng-template #noData>
+  <app-no-data>Oops! No teams in this league.</app-no-data>
 </ng-template>

@@ -1,9 +1,8 @@
-<app-search-league
-  class="search"
+<app-league-search
   *ngIf="leagues$ | async as leagues"
   [leagues]="leagues"
   (selected)="navigateToLeague($event)"
-></app-search-league>
+></app-league-search>
 
 <ng-container *ngIf="leagueWithTeams$ | async as leagueWithTeams">
   <app-league-teams [leagueWithTeams]="leagueWithTeams"></app-league-teams>

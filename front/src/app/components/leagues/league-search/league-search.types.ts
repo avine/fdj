@@ -1,6 +1,6 @@
 import { LeagueApi } from '@fdj/shared';
 
-export interface SearchLeagueState {
+export interface LeagueSearchState {
   suggestions: LeagueApi[];
   selected: LeagueApi;
 }
