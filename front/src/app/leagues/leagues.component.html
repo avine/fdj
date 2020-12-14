@@ -1,7 +1,9 @@
-<app-league-search
-  *ngIf="leagues$ | async as leagues"
-  [leagues]="leagues"
-  (selected)="navigateToLeague($event)"
-></app-league-search>
+<div class="search">
+  <app-league-search
+    *ngIf="leagues$ | async as leagues"
+    [leagues]="leagues"
+    (selected)="navigateToLeague($event)"
+  ></app-league-search>
+</div>
 
 <router-outlet></router-outlet>

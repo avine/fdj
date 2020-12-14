@@ -9,6 +9,7 @@ import { ApiService } from '../shared/services/api.service';
 @Component({
   selector: 'app-leagues',
   templateUrl: './leagues.component.html',
+  styleUrls: ['./leagues.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LeaguesComponent implements OnInit {
